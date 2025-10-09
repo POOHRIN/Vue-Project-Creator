@@ -1,6 +1,9 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("electronAPI", {
-  createProject: (data) => ipcRenderer.invoke("create-vue-project", data),
-  onLogUpdate: (callback) => ipcRenderer.on("log-update", (_, msg) => callback(msg)),
+  // Folder picker
+  browseFolder: () => ipcRenderer.invoke("browse-folder"),
+
+  // Project creation
+  createProject: (data) => ipcRenderer.send("create-project", data),
 });
